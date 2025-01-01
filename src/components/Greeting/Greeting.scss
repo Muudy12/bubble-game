@@ -1,0 +1,165 @@
+@use "../../App.scss" as *;
+@use "../../partials/mixins" as *;
+
+.home {
+  &__hello {
+    display: flex;
+    justify-content: center;
+    z-index: 1;
+    margin: 0;
+    font-size: 1.8rem;
+
+    &-name {
+      color: rgb(6, 181, 6);
+    }
+
+    @include tablet {
+      font-size: 2.8rem;
+    }
+
+    @include desktop {
+      font-size: 3.2rem;
+    }
+  }
+
+  &__message {
+    font-size: 1rem;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    width: 60%;
+    flex-direction: column;
+
+    @include tablet {
+      font-size: 1.8rem;
+    }
+
+    @include desktop {
+      font-size: 2rem;
+    }
+
+    & span {
+      margin-top: 1rem;
+      width: 90%;
+      font-size: 0.8rem;
+
+      @include tablet {
+        font-size: 1.2rem;
+        margin-top: 1rem;
+        width: 70%;
+      }
+
+      @include desktop {
+        font-size: 1.5rem;
+        margin-top: 1.8rem;
+      }
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    text-align: center;
+    z-index: 1;
+
+    &-label {
+      margin: 0.5rem 0;
+      color: rgb(63, 63, 65);
+
+      @include tablet {
+        font-size: 1.5rem;
+        margin: 1rem 0;
+      }
+
+      @include desktop {
+        font-size: 1.8rem;
+        margin: 1.3rem 0;
+      }
+    }
+
+    &-input {
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 2rem;
+      outline: none;
+      border-radius: 0.3rem;
+      border: 0.12rem solid grey;
+      margin-bottom: 0.5rem;
+
+      @include tablet {
+        height: 3.5rem;
+        width: 20rem;
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      @include desktop {
+        margin-bottom: 1.8rem;
+      }
+
+      &:focus {
+        border-color: lightblue;
+        &::placeholder {
+          visibility: hidden;
+        }
+      }
+    }
+
+    &-button {
+      margin: 1rem 0;
+      background-color: grey;
+      outline: none;
+      position: relative;
+      border: none;
+      box-sizing: border-box;
+      height: 2rem;
+      border-radius: 0.3rem;
+      font-weight: 600;
+      letter-spacing: 0.02rem;
+      cursor: pointer;
+
+      @include tablet {
+        height: 3.5rem;
+        font-size: 1.5rem;
+      }
+
+      &:hover {
+        &::before {
+          top: -0.2rem;
+          left: 0.2rem;
+        }
+      }
+
+      &:active {
+        background-color: rgb(97, 118, 203);
+        color: white;
+
+        &::before {
+          top: 0;
+          left: 0;
+          z-index: -1;
+        }
+      }
+
+      &::before {
+        content: attr(data-label);
+        background-color: lightblue;
+        display: flex;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        position: absolute;
+        border-radius: inherit;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+}

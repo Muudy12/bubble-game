@@ -1,0 +1,52 @@
+@mixin tablet {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: 1280px) {
+    @content;
+  }
+}
+
+@keyframes colorChangeMobile {
+  0% {
+    background-color: #ff0000;
+    transform: translate(0, 0);
+  }
+  25% {
+    background-color: #faeb66;
+    transform: translate(90vw, -30vh);
+  }
+  30% {
+    background-color: #fd96ef;
+   transform: translate(30vw, -80vh);
+  }
+  58% {
+    background-color: #a8214e;
+    transform: translate(-8vw, -30vh);
+  }
+  70% {
+    background-color: #00ff00;
+    transform: translate(90vw, -8vh);
+  }
+  80% {
+    background-color: #faeb66;
+    transform: translate(40vw, 8vh);
+  }
+  100% {
+    background-color: #0000ff;
+    transform: translate(0, 0);
+  }
+}
+
+@mixin sidePadding {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@mixin containerTopBotPadding {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
