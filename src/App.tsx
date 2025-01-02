@@ -25,6 +25,13 @@ function App() {
   });
 
   useEffect(() => {
+    const getInitialScores = async () => {
+      const response = await axios.get(api);
+      setScores(response.data);
+    };
+
+    getInitialScores();
+
     socket.on("scores", (data) => {
       if (data) {
         setScores(data);
