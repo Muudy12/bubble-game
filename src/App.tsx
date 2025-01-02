@@ -19,12 +19,12 @@ function App() {
   const [countdown, setCountdown] = useState(30); // 30 seconds
   const [timeActive, setTimeActive] = useState(false);
 
-  const socket = io(socketUrl, {
-    transports: ["websocket"],
-    secure: true,
-  });
-
   useEffect(() => {
+    const socket = io(socketUrl, {
+      transports: ["websocket"],
+      secure: true,
+    });
+
     const getInitialScores = async () => {
       const response = await axios.get(api);
       setScores(response.data);
@@ -32,19 +32,21 @@ function App() {
 
     getInitialScores();
 
-    socket.on("scores", (data) => {
+    socket.on("scores", (data: IScore[]) => {
       if (data) {
         setScores(data);
       }
     });
 
     return () => {
-      socket.off("scores");
+      if (socket) {
+        socket.disconnect();
+      }
     };
   }, []);
 
   useEffect(() => {
-    let timer: number;
+    let timer: any;
 
     if (timeActive && countdown > 0) {
       timer = setInterval(() => {
