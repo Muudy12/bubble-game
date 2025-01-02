@@ -27,7 +27,12 @@ body {
   display: flex;
   place-items: center;
   min-width: 320px;
+  width: 100vw;
   min-height: 100vh;
+  overflow-y: scroll;
+  height: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 h1 {

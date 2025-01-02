@@ -8,6 +8,7 @@ import Greeting from "./components/Greeting/Greeting";
 
 function App() {
   const api: string = import.meta.env.VITE_API_URL;
+  const socketUrl: string = import.meta.env.VITE_SOCKET_URL;
   const [bubbles, setBubbles] = useState<Bubble[]>([]);
   const [counterVisible, setCounterVisible] = useState(false);
   const [bubblesCollected, setBubblesCollected] = useState(0);
@@ -18,7 +19,7 @@ function App() {
   const [countdown, setCountdown] = useState(30); // 30 seconds
   const [timeActive, setTimeActive] = useState(false);
 
-  const socket = io("wss://mu-port-api.onrender.com/?key=muportapikey", {
+  const socket = io(socketUrl, {
     transports: ["websocket"],
     secure: true,
   });
@@ -45,17 +46,17 @@ function App() {
     }
 
     if (countdown === 0) {
+      const addPlayer = async () => {
+        await axios.post(api, {
+          name: player,
+          score: bubblesCollected | 0,
+        });
+      };
+      addPlayer();
       setTimeActive(false);
       setCountdown(30);
       setBubblesCollected(0);
       setBubbles([]);
-      const addPlayer = async () => {
-        await axios.post(api, {
-          name: player,
-          score: bubblesCollected,
-        });
-      };
-      addPlayer();
     }
 
     return () => clearInterval(timer); // cleanup timer on conponent unmount or active changes
@@ -97,19 +98,26 @@ function App() {
       <main className="home">
         {startCannon && (
           <ul className="home__scores">
-            {scores && scores.length > 0
-              ? scores?.map((s, index) => {
-                  return (
-                    <li className="home__scores-player player" key={index}>
-                      <span className="player__position">
-                        {getPlace(s.position)}
-                      </span>
-                      <span className="player__name">"{s.name}" @ </span>
-                      <span className="player__score">{s.score}</span>
-                    </li>
-                  );
-                })
-              : <p className="loading">Loading<div><span>...</span></div></p>}
+            {scores && scores.length > 0 ? (
+              scores?.map((s, index) => {
+                return (
+                  <li className="home__scores-player player" key={index}>
+                    <span className="player__position">
+                      {getPlace(s.position)}
+                    </span>
+                    <span className="player__name">"{s.name}" @ </span>
+                    <span className="player__score">{s.score}</span>
+                  </li>
+                );
+              })
+            ) : (
+              <p className="loading">
+                Loading
+                <div>
+                  <span>...</span>
+                </div>
+              </p>
+            )}
           </ul>
         )}
         <div className="home__content-container">
