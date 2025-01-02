@@ -30,6 +30,7 @@
     justify-content: center;
     width: 60%;
     flex-direction: column;
+    margin: 0;
 
     @include tablet {
       font-size: 1.8rem;
@@ -40,7 +41,7 @@
     }
 
     & span {
-      margin-top: 1rem;
+      margin-top: 0.5rem;
       width: 90%;
       font-size: 0.8rem;
 

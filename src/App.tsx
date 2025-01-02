@@ -48,6 +48,7 @@ function App() {
       setTimeActive(false);
       setCountdown(30);
       setBubblesCollected(0);
+      setBubbles([]);
       const addPlayer = async () => {
         await axios.post(api, {
           name: player,
