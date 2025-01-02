@@ -1,4 +1,4 @@
-import './App.scss'
+import "./App.scss";
 import { useEffect, useState } from "react";
 import { Bubble, IScore } from "./utils/utils";
 import CannonImage from "./assets/icons/cannon.svg";
@@ -7,6 +7,7 @@ import io from "socket.io-client";
 import Greeting from "./components/Greeting/Greeting";
 
 function App() {
+  const api: string = import.meta.env.VITE_API_URL;
   const [bubbles, setBubbles] = useState<Bubble[]>([]);
   const [counterVisible, setCounterVisible] = useState(false);
   const [bubblesCollected, setBubblesCollected] = useState(0);
@@ -35,7 +36,7 @@ function App() {
   }, []);
 
   useEffect(() => {
-    let timer:number;
+    let timer: number;
 
     if (timeActive && countdown > 0) {
       timer = setInterval(() => {
@@ -48,13 +49,10 @@ function App() {
       setCountdown(30);
       setBubblesCollected(0);
       const addPlayer = async () => {
-        await axios.post(
-          "https://mu-port-api.onrender.com/scores?key=muportapikey",
-          {
-            name: player,
-            score: bubblesCollected,
-          }
-        );
+        await axios.post(api, {
+          name: player,
+          score: bubblesCollected,
+        });
       };
       addPlayer();
     }
@@ -62,7 +60,7 @@ function App() {
     return () => clearInterval(timer); // cleanup timer on conponent unmount or active changes
   }, [timeActive, countdown]);
 
-  const popped = (bub:Bubble) => {
+  const popped = (bub: Bubble) => {
     bub.visible = false;
     setBubblesCollected(bubblesCollected + 1);
   };
@@ -80,7 +78,7 @@ function App() {
     }
   }
 
-  function getPlace(position:string) {
+  function getPlace(position: string) {
     switch (position) {
       case "1":
         return "1rst:";
@@ -94,7 +92,7 @@ function App() {
   }
 
   return (
-    <>      
+    <>
       <main className="home">
         {startCannon && (
           <ul className="home__scores">
@@ -110,11 +108,11 @@ function App() {
                     </li>
                   );
                 })
-              : "Loading..."}
+              : <p className="loading">Loading<div><span>...</span></div></p>}
           </ul>
         )}
         <div className="home__content-container">
-        <Greeting setStartCannon={setStartCannon} setPlayer={setPlayer} />
+          <Greeting setStartCannon={setStartCannon} setPlayer={setPlayer} />
           {startCannon && (
             <>
               <img
@@ -152,4 +150,4 @@ function App() {
   );
 }
 
-export default App
+export default App;

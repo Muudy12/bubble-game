@@ -138,6 +138,25 @@ body {
       padding: 1rem 2rem;
     }
 
+    & .loading {
+      margin: 0;
+
+      & > div {
+        width: 3rem;
+        display: inline-flex;
+
+        & > span {
+          font-family: "Courier New", Courier, monospace;
+          white-space: nowrap;
+          overflow: hidden;
+          display: inline-block; /* Use inline-block for span to apply width */
+          width: 0; /* Start hidden */
+          animation: typing 2s steps(3, end) infinite,
+            blink 0.5s step-end infinite;
+        }
+      }
+    }
+
     & li {
       display: flex;
       align-items: center;
@@ -173,5 +192,25 @@ body {
         }
       }
     }
+  }
+}
+
+/* Typing animation */
+@keyframes typing {
+  0% {
+    width: 0; /* Start with no visible text */
+  }
+  50% {
+    width: 2ch;
+  }
+  100% {
+    width: 3ch; /* Matches the number of characters ("...") */
+  }
+}
+
+/* Blinking cursor */
+@keyframes blink {
+  50% {
+    border-color: transparent;
   }
 }
